@@ -1,2 +1,2 @@
 # Portfolio
- This is my portfolio made in html
+ This site is supposed to represent the things I can do 
