@@ -4,7 +4,7 @@ body {
     padding: 0;
 }
   
-header {
+header{
     background-color: #f1f1f1;
     padding: 20px;
     text-align: center;
@@ -14,20 +14,38 @@ h1 {
     color: #333;
 }
   
-h2 {
+h2{
     color: #666;
 }
   
-ul {
+ul{
     list-style-type: none;
     padding: 0;
 }
   
-li {
+li{
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
   
-section {
+section{
     padding: 20px;
+}
+.code-boxes-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.code-box {
+    background-color: #232323;
+    color: #fff;
+    flex: 1 1 45%;
+    margin-right: 2.5%;
+    margin-bottom: 10px;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.code-box:nth-child(2n) {
+    margin-right: 0;
 }
