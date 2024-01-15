@@ -8,10 +8,14 @@
  <header>
     <h1>David Horák</h1>
     <p>Age: 15 yo</p>
-    <p>Student</p>
+    <p>Future SSPŠ student</p>
     <p>Software development</p>
     <p>etc.</p>
  </header>
+
+ <section>
+
+ </section>
   
  <section>
     <h2>Languages</h2>
@@ -21,7 +25,6 @@
       <li>Python</li>
       <li>C++</li>
       <li>lua</li>
-      <li>Česky</li>
     </ul>
 </section>
   
@@ -29,8 +32,22 @@
    <h2>Portfolio</h2>
    <div class="code-boxes-container">
        <div class="code-box">
-           <p>Code box 1</p>
+        <p>def replace_spaces_with_underscores(file_path):</p>
+        <p>__with open(file_path, 'r') as file:</p>
+        <p>____lines = file.readlines()</p>
+        <p></p>
+        <p>__# edit lines</p>
+        <p>__for i in range(len(lines)):</p>
+        <p>____lines[i] = lines[i].replace("__", "__")</p>
+        <p>____lines[i] = "<p>" + lines[i].strip() + "</p>\n"</p>
+        <p></p>
+        <p>__with open(file_path, 'w') as file:</p>
+        <p>____file.writelines(lines)</p>
+        <p></p>
+        <p># usage</p>
+        <p>replace_spaces_with_underscores('textfile.txt')</p>
        </div>
+       
        <div class="code-box">
            <p>Code box 2</p>
        </div>
