@@ -10,8 +10,10 @@ header {
     text-align: center;
 }
 
+
 h1 {
     color: #333;
+    font-weight: 750;
 }
 
 h2 {
@@ -32,11 +34,15 @@ section {
     padding: 20px;
 }
 
+#my-lifestory p {
+    font-size: 1.4em;
+}
+
 .code-boxes-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    gap: 10px; /* Added gap between code boxes */
+    gap: 10px;
 }
 
 .code-box {
