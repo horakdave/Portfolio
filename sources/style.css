@@ -94,6 +94,8 @@ body {
     touch-action: manipulation;
     width: 100%;
     text-decoration: none;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .button:hover {

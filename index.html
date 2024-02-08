@@ -41,13 +41,13 @@
         <h3>(moje nejlepší projekty)</h3>
 
         <div class="button-box">
-            <a href="sources/codebox1.html" class="button">projekt-TNP</a>
-            <a href="sources/codebox2.html" class="button">"projekt 2"</a>
-            <a href="sources/codebox2.html" class="button">"projekt 3"</a>
+            <a id="button1" href="sources/codebox1.html" class="button">projekt-TNP</a>
+            <a id="button2" href="sources/codebox2.html" class="button">"projekt 2"</a>
+            <a id="button3" href="sources/codebox3.html" class="button">"projekt 3"</a>
         </div>
 
-        <div class="code-boxes-box">
-          <div class="code-box">
+        <div class="code-boxes-box" id="code-box-1">
+            <div class="code-box">
             <h3>toto pořád testuji</h3>
             <pre>
 
@@ -107,15 +107,25 @@ plt.show()
             </pre>
             </div>
 
-            <div class="code-box">
+            <div class="code-box" id="code-box-2">
                 <p>"Kódový blok" 2</p>
             </div>
 
-            <div class="code-box">
+            <div class="code-box" id="code-box-2">
                 <p>"Kódový blok" 3</p>
             </div>
         </div>
-        <!-- portfolio items -->
     </section>
+
+    <script>    /* Guy on discord helped me with the script because Im not good at javascript :( */
+        const codeBoxes = document.querySelectorAll('.code-box');
+        const buttons = document.querySelectorAll('.button');
+
+        codeBoxes.forEach((codeBox, index) => {
+            const button = buttons[index];
+            const codeBoxWidth = codeBox.offsetWidth;
+            button.style.width = `${codeBoxWidth}px`;
+        });
+    </script>
 </body>
 </html>
