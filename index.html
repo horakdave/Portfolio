@@ -1,84 +1,121 @@
 <!DOCTYPE html>
 <html>
 <head>
- <title>My Portfolio</title>
- <link rel="stylesheet" type="text/css" href="sources/style.css">
+    <title>Portfolio</title>
+    <link rel="stylesheet" type="text/css" href="sources/style.css">
 </head>
 <body>
- <header>
-    <h1>David Horák</h1>
-    <p>Age: 15 yo</p>
-    <p>Future SSPŠ student</p>
-    <p>Software development</p>
-    <p>etc.</p>
- </header>
+    <header>
+        <h1>David Horák</h1>
+        <p>Věk: 15 let</p>
+        <p>Budoucí student SSPŠ</p>
+        <p>Software development</p>
+        <p>atd.</p>
+    </header>
 
- <section>
+    <section>
+        <h2>Dovednosti</h2>
+        <ul>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>Figma</li>
+            <li>Python</li>
+            <li>C++</li>
+        </ul>
+    </section>
 
- </section>
-  
- <section>
-    <h2>Languages</h2>
-    <ul>
-      <li>HTML</li>
-      <li>CSS</li>
-      <li>Python</li>
-      <li>C++</li>
-      <li>lua</li>
-    </ul>
-</section>
+    <section id="my-lifestory">
+        <h2>Pohádka na dobrou noc</h2>
+        <h3>Jak jsem začal s programováním</h3>
+        <p>Začal jsem programovat ve věku 11 let inspirován vývojáři jako Randy nebo Dani, kteří ukazovali svou schopnost přidávat cokoli chtěli do svých her na YouTube. Svoboda, kterou měli, mě fascinovala a motivovala k tomu, abych se věnoval programování. Můj otec, datový vědec, podporoval mé zájmy. Zatímco jsem začal s vývojem her, nyní se více orientuji na vývoj softwaru a webových stránek. Například jsem vytvořil bota, který kontroloval vstupy do programu techdays, abych byl mezi prvními, kdo to ví a mohl si koupit vstupenku dříve než byly vyprodané. Podobně jsem vytvořil bota, který kontroloval přípravný kurz na matematiku k JPZ ve škole SSPŠ. Programování mi umožňuje pomáhat i ostatním, například pomáhání mé matce s organizací souborů s konkrétními názvy v různých složkách.</p>
 
-<section id="my-lifestory">
-    <h2>My Life Story</h2>
-    <h3>How I got into coding</h3>
-    <p>I began coding at the age of 11 inspired by developers like Randy or Dani who showcased their ability to add anything they wanted to their games on YouTube. 
-The freedom they had fascinated me motivating me to pursue coding. 
-My dad a data scientist supported my interest. 
-While I started with game development I now lean more towards software and web development. 
-Notably I created a bot to check for techdays program entry tickets ensuring I was among the first to know. 
-Similarly I made a bot that checked for my preparation for JPZ in SSPŠ high school's math classes. 
-The versatility of coding allows me to assist others like helping my mom organize files with specific names in various folders.</p>
-
-    <h3>Future Plans</h3>
-          <p>The only thing Im focusing on right now is getting accepted by SSPŠ highschool because it is the best one in the whole Czech Republic and one of the better ones in europe.</p>
+        <h3>Budoucí plány</h3>
+        <p>Jediné, na čem se nyní zaměřuji, je dostat se na SSPŠ, protože je nejlepší v celé České republice a jednou z lepších v Evropě.</p>
     
-    <h3>Motivation</h3>
-    <p>My motivation is to make a seuccesful company/companies that not only would make me money but they would be usefull for other people too.</p>
-</section>
+        <h3>Motivace</h3>
+        <p>Má motivace spočívá v tom, vytvořit úspěšnou firmu/firmy, které by mi nejen vydělaly peníze, ale byly by užitečné i pro ostatní lidi.</p>
+    </section>
   
- <section>
-   <h2>Portfolio</h2>
-   <div class="code-boxes-container">
-       <div class="code-box">
-        
-        <p>Im still testing out how would it look(its not done)</p>
-        <p>--------------------------------------------------</p>
-        
-        <p>def replace_spaces_with_underscores(file_path):</p>
-        <p>__with open(file_path, 'r') as file:</p>
-        <p>____lines = file.readlines()</p>
-        <p></p>
-        <p>__# edit lines</p>
-        <p>__for i in range(len(lines)):</p>
-        <p>____lines[i] = lines[i].replace("__", "__")</p>
-        <p>____lines[i] = "<p>" + lines[i].strip() + "</p>\n"</p>
-        <p></p>
-        <p>__with open(file_path, 'w') as file:</p>
-        <p>____file.writelines(lines)</p>
-        <p></p>
-        <p># usage</p>
-        <p>replace_spaces_with_underscores('textfile.txt')</p>
-       </div>
+    <section>
+        <h2>Portfolio</h2>
+        <h3>(moje nejlepší projekty)</h3>
 
-       <div class="code-box">
-           <p>Code box 2</p>
-       </div>
-       <div class="code-box">
-           <p>Code box 3</p>
-       </div>
-   </div>
-   <!-- portfolio items-->
-</section>
+        <div class="button-box">
+            <a href="sources/codebox1.html" class="button">projekt-TNP</a>
+            <a href="sources/codebox2.html" class="button">"projekt 2"</a>
+            <a href="sources/codebox2.html" class="button">"projekt 3"</a>
+        </div>
 
+        <div class="code-boxes-box">
+          <div class="code-box">
+            <h3>toto pořád testuji</h3>
+            <pre>
+
+
+import yfinance as yf
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+from datetime import datetime, timedelta
+
+def get_stock_data(symbol, interval='1m', hours_back=24):   # upravte dle potřeby
+    end_date = datetime.now()
+    start_date = end_date - timedelta(hours=hours_back) - timedelta(hours=0) # upravte dle potřeby
+    return yf.download(symbol, interval=interval, start=start_date, end=end_date)
+
+
+def simple_moving_average_strategy(data, short_window=10, long_window=50):
+    signals = pd.DataFrame(index=data.index)
+    signals['price'] = data['Close']
+    signals['short_mavg'] = data['Close'].rolling(window=short_window, min_periods=1, center=False).mean()
+    signals['long_mavg'] = data['Close'].rolling(window=long_window, min_periods=1, center=False).mean()
+    signals['signal'] = 0.0
+    signals['signal'][short_window:] = (signals['short_mavg'][short_window:] > signals['long_mavg'][short_window:]).astype(float)
+    signals['positions'] = signals['signal'].diff()
+    return signals
+
+def update(frame):
+    new_data = get_stock_data(stock_symbol, interval='1m', hours_back=30)
+    signals = simple_moving_average_strategy(new_data)
+
+    plt.clf()
+
+    plt.plot(new_data['Close'], label=f'{stock_symbol} Price')
+
+    if not signals.empty:
+        plt.plot(signals['short_mavg'], label='Short MA', linestyle='-')
+        plt.plot(signals['long_mavg'], label='Long MA', linestyle='-')
+
+        buy_indices = signals.loc[signals.positions == 1.0].index
+        buy_values = signals.short_mavg[signals.positions == 1.0]
+        plt.scatter(buy_indices, buy_values, marker='^', color='g', label='Buy', alpha=1, s=100)
+
+        sell_indices = signals.loc[signals.positions == -1.0].index
+        sell_values = signals.short_mavg[signals.positions == -1.0]
+        plt.scatter(sell_indices, sell_values, marker='v', color='r', label='Sell', alpha=1, s=100)
+
+    plt.title(f'{stock_symbol} - Real-Time Moving Average Strategy')
+    plt.xlabel('Date')
+    plt.ylabel('Price')
+    plt.legend()
+
+stock_symbol = 'NVDA' # upravte na vaši zvolenou akcii
+
+fig, ax = plt.subplots(figsize=(12, 8))
+ani = FuncAnimation(fig, update, interval=1000) # upravte dle potřeby (100 = 1 sekunda)
+plt.show()
+            </pre>
+            </div>
+
+            <div class="code-box">
+                <p>"Kódový blok" 2</p>
+            </div>
+
+            <div class="code-box">
+                <p>"Kódový blok" 3</p>
+            </div>
+        </div>
+        <!-- portfolio items -->
+    </section>
 </body>
 </html>
