@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-if;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -37,27 +37,32 @@ section {
   font-size: 1.4em;
 }
 
-.code-boxes-box {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 10px;
-}
-
-.code-box {
-  background-color: #232323;
-  color: #fff;
-  flex: 1 1 calc(30% - 10px); /* Adjust later */
-  margin-bottom: 10px;
-  padding: 20px;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-@media (max-width: 768px) {
-  .code-box {
-    flex: 1 1 calc(50% - 10px); /* Adjust later */
+@media (min-width: 1140px) {
+  .code-boxes-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 10px;
+    overflow-x: auto;
   }
+
+  .code-box {
+    background-color: #232323;
+    color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  .code-box {
+    flex: 1;
+    margin-right: 10px;
+    overflow-x: hidden;
+  }
+}
+
+.code-box pre {
+  white-space: pre-wrap;
+  flex: none;
 }
 
 .button-box {
