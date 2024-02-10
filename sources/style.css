@@ -47,16 +47,13 @@ section {
   }
 
   .code-box {
+    flex: 1;
+    overflow-x: hidden;
     background-color: #232323;
     color: #fff;
     padding: 20px;
     border-radius: 5px;
     box-sizing: border-box;
-  }
-  .code-box {
-    flex: 1;
-    margin-right: 10px;
-    overflow-x: hidden;
   }
 }
 
@@ -67,13 +64,13 @@ section {
 
 .button-box {
   display: flex;
+  align-items: flex-start;
   justify-content: space-around;
   gap: 10px;
   margin-bottom: 20px;
 }
 
 .button {
-  flex: 1;
   background-color: #222;
   border-radius: 4px;
   border-style: none;
@@ -86,22 +83,25 @@ section {
   font-weight: 700;
   line-height: 1.5;
   margin: 0;
-  max-width: none;
-  min-height: 44px;
-  min-width: 10px;
   outline: none;
   overflow: hidden;
-  padding: 9px 20px 8px;
   position: relative;
   text-align: center;
   text-transform: none;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  width: 100%;
-  text-decoration: none;
-  width: 100%;
+  flex: 1;
   box-sizing: border-box;
+}
+
+.code-box {
+  background-color: #232323;
+  color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .button:hover {
