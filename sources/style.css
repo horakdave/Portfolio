@@ -88,6 +88,7 @@ section {
   position: relative;
   text-align: center;
   text-transform: none;
+  text-decoration: none;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
