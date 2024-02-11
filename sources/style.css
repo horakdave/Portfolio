@@ -122,3 +122,20 @@ section {
   justify-content: space-around;
   gap: 10px;
 }
+
+table {
+  border-collapse: collapse;
+  width: 60%; 
+  margin: 0 auto;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
