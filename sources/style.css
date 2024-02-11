@@ -55,6 +55,11 @@ section {
     border-radius: 5px;
     box-sizing: border-box;
   }
+
+  a {
+    text-decoration: none;
+    color: #9e9e9e;
+  }
 }
 
 .code-box pre {
