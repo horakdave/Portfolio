@@ -16,103 +16,87 @@
     <section class="ostatni-codeboxy">
         <div class="code-boxes-box">
             <div class="code-box" id="code-box-1">
-                <h3>FlappyBird.py</h3>
-                <h4>Jednoduchá hra flappy bird psaná vy pythonu. Jediné co je třeba k hraní je stáhnout knihovnu pygame a obrázky pojmenované bird.png, background.png a pipe.png(Můžete je najít na mém Githubu.)</h4>
+                <h3>HandyVolume.py</h3>
+                <h4>toto je program který sleduje přez webkameru vaši ruku a když se váš palec přiblíží k vašemu ukazováčku tak se hlasitost ztiší a když se naopak vzdálí tak se hlasitost zvíší. tento projekt vyžaduje instalaci knihovny OpenCV, mediapipe a pyautogui. (projekt můžete nalést na mém githubu)
+                </h4>
                 <a href="https://github.com/horakdave/Pygame/tree/main/flappy_bird">zde</a>
                 <pre><code>
 
 
 
                     
-import pygame
-import random
-import time
-
-pygame.init()
-
-WINDOW_WIDTH = 1920 #sirska
-WINDOW_HEIGHT = 1080 #vyska
-WINDOW_TITLE = "Flappy Bird"
-window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-pygame.display.set_caption(WINDOW_TITLE)
-
-bg_image = pygame.image.load("background.png").convert()
-
-#                                                                                   Background
-bg_image = pygame.transform.scale(bg_image, (WINDOW_WIDTH, WINDOW_HEIGHT))
-
-bird_image = pygame.image.load("bird.png").convert_alpha()
-
-pipe_image = pygame.image.load("pipe.png").convert_alpha()
-pipe_image = pygame.transform.scale(pipe_image, (200, 600)) #                       Pipe
+import cv2
+import mediapipe as mp
+import numpy as np
+import math
+import pyautogui
 
 
-FPS = 60
-clock = pygame.time.Clock()
-bird_rect = bird_image.get_rect(center=(50, WINDOW_HEIGHT / 2))
-gravity = 0.35
-bird_movement = 0
-pipe_gap = 400 #                                                                    gap
-pipe_list = []
-SPAWNPIPE = pygame.USEREVENT
-pygame.time.set_timer(SPAWNPIPE, 1200)
- 
-def handle_input():
-    global bird_movement
+VOLUME_RANGE = [0, 100]
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
-        if event.type == pygame.KEYDOWN: 
-            if event.key == pygame.K_SPACE:
-                bird_movement = 0
-                bird_movement -= 8
+current_volume = VOLUME_RANGE[1] // 2
 
-def update_game():
-    global bird_movement
+mp_drawing = mp.solutions.drawing_utils
+mp_hands = mp.solutions.hands
 
-    bird_movement += gravity
-    bird_rect.centery += bird_movement
+cap = cv2.VideoCapture(0)
 
-    for pipe in pipe_list:
-        pipe.centerx -= 2
+with mp_hands.Hands(
 
-    if len(pipe_list) > 0 and pipe_list[0].centerx < -50:
-        pipe_list.pop(0)
+        min_detection_confidence=0.5,
 
-    #                                                                               overlapping
-    if len(pipe_list) < 4:
-        pipe_height = random.choice([500, 600, 700, 800, 900])
-        bottom_pipe = pipe_image.get_rect(midtop=(1920, pipe_height))
-        top_pipe = pipe_image.get_rect(midbottom=(1920, pipe_height - pipe_gap))
-        if not any(pipe.colliderect(other_pipe) for other_pipe in pipe_list):
-            pipe_list.append(bottom_pipe)
-            pipe_list.append(top_pipe)
+        min_tracking_confidence=0.5) as hands:
 
-def draw_game():
-    window.blit(bg_image, (0, 0))
 
-    window.blit(bird_image, bird_rect)
+    while cap.isOpened():
 
-    #                                                                                   pipe
-    for pipe in pipe_list:
-        if pipe.bottom >= WINDOW_HEIGHT:
-            window.blit(pipe_image, pipe)
-        else:
-            flip_pipe = pygame.transform.flip(pipe_image, False, True)
-            window.blit(flip_pipe, pipe)
+        success, image = cap.read()
 
-    pygame.display.update()
+        if not success:
+            print("nenacita se frame webkamery.")
+            break
 
-while True:
-    handle_input()
+        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-    update_game()
+        results = hands.process(image_rgb)
 
-    draw_game()
+        # landmarky ruky    tutorial pomohl :(
 
-    clock.tick(FPS)</code >
+        image.flags.writeable = True
+
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+        if results.multi_hand_landmarks:
+            for hand_landmarks in results.multi_hand_landmarks:
+                mp_drawing.draw_landmarks(
+                    image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+
+
+                thumb = hand_landmarks.landmark[mp_hands.HandLandmark.THUMB_TIP]
+                pointer_finger = hand_landmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP]
+
+                distance = math.sqrt(
+                    (thumb.x - pointer_finger.x) ** 2 + (thumb.y - pointer_finger.y) ** 2)
+
+                mapped_volume = np.interp(distance, [0, 0.2], VOLUME_RANGE)
+
+                mapped_volume = int(mapped_volume)
+
+                if mapped_volume != current_volume:
+                    current_volume = mapped_volume
+                    pyautogui.press('volumeup', presses=current_volume)
+
+        cv2.putText(image, f"Volume: {current_volume}", (10, 30),
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
+        cv2.imshow('Volume changer', image)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+
+            break
+
+
+cap.release()</code >
                 </pre>
             </div>
 
@@ -146,6 +130,28 @@ while True:
     else:
         print(f"prijmacy zkousky budou za {days_count} dni")
         time.sleep(3600)</code>
+                </pre>
+                <h3>Techdays-activity</h3>
+                <h4>Tento program sleduje stránku s přihlášky na program TechDays a kontroluje , jestly je text "Formulář TechDays! 2024 již nepřijímá odpovědi." na stránce jestlyže ne tak to znamenalo že jsou přihlášky dostupné. Stejný program jsem použil i na Matematiku k JPZ na SSPŠ. (Můžete to opět najít na mém Githubu.)</h4>
+                <a href="https://github.com/horakdave/Countdowns_or_trackers/blob/main/TechDays_activity.py">zde</a>
+                <pre>
+                    <code>
+import time
+import requests
+
+url = "https://docs.google.com/forms/d/e/1FAIpQLSd15j0zSDbtcyT5NKU_01N0J2IRYzzQECkHff2dFTrVkucyDw/closedform"
+expected_text = "Formulář TechDays! 2023 již nepřijímá odpovědi."
+
+while True:
+    response = requests.get(url)
+    
+    if expected_text in response.content.decode("utf-8"):
+        print(f"{time.ctime()}   tech days este nejsou")
+    else:
+        print(f"{time.ctime()}   tech days uz jsou")
+
+    time.sleep(3600)
+                    </code>
                 </pre>
             </div>
             <div class="code-box" id="code-box-3">
