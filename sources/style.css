@@ -154,3 +154,19 @@ section.ostatni-codeboxy .code-box{
   color: #242424;
   text-decoration: none;
 }
+
+#social-links ul {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#social-links li {
+  margin: 10px;
+}
+
+#social-links a {
+  color: #333;
+}
