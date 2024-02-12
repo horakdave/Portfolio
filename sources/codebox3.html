@@ -13,11 +13,11 @@
         <h2>Více informací</h2>
         <p>Toto je sbírka projektů které jsemtaké udělal, ale nemyslím si že jsou tak užitečné, jako ty které jsou na hlavní stránce portfolia.</p>
     </section>
-    <section>
+    <section class="ostatni-codeboxy">
         <div class="code-boxes-box">
             <div class="code-box" id="code-box-1">
-                <h3>"Flappy-Bird.py"</h3>
-                <h4>Jednoduchá hra flappy bird psaná vy pythonu. Jediné co je třeba k hraní je stáhnout knihovnu pygame a obrázky pojmenované bird.png, background.png a pipe.png(můžete je najít na mém githubu)</h4>
+                <h3>"FlappyBird.py"</h3>
+                <h4>Jednoduchá hra flappy bird psaná vy pythonu. Jediné co je třeba k hraní je stáhnout knihovnu pygame a obrázky pojmenované bird.png, background.png a pipe.png(Můžete je najít na mém Githubu.)</h4>
                 <a href="https://github.com/horakdave/Pygame/tree/main/flappy_bird">zde</a>
                 <pre>
 
@@ -117,9 +117,35 @@ while True:
             </div>
 
             <div class="code-box" id="code-box-2">
-                <h3>"mini-projekt.2"</h3>
+                <h3>"JPZcountdown"</h3>
+                <h4>Toto je program který ve dnech odpočítává dny do Jednotné Příjimací Zkoušky. (Můžete ho také najít na mém Githubu.)</h4>
+                <a href="https://github.com/horakdave/Countdowns_or_trackers/blob/main/JPZcountdown.py">zde</a>
                 <pre>
-                    (kód)
+
+
+
+
+from datetime import date
+import time
+today = date.today()
+final_date = date(2024, 4, 12)
+
+if final_date < today:
+    final_date = date(2024, 4, 12)
+
+if final_date == today:
+    print("dneska jsou/byly prijmacky")
+
+days_count = (final_date - today).days
+while True:
+    if days_count == 1:
+        zitra = input("ZÍTRA JSOU PRIJMACKY(uc se nebo se nedostanes na ssps)")
+        print(zitra)
+        time.sleep(3600)
+
+    else:
+        print(f"prijmacy zkousky budou za {days_count} dni")
+        time.sleep(3600)
                 </pre>
             </div>
         </div>
