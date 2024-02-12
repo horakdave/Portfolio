@@ -149,3 +149,8 @@ th {
 section.ostatni-codeboxy .code-box{
   width: fit-content;
 }
+
+.a-ostatni {
+  color: #242424;
+  text-decoration: none;
+}
