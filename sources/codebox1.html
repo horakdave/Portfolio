@@ -11,14 +11,6 @@
     </header>
 
     <section>
-        <h2>Více informací</h2>
-        <p>
-            Projekt TNP je script psaný v pythonu který sleduje cenu akcie dle vašeho výběru a doporučí kdy prodat/nakoupit aby byl zisk co největší.
-        </p>
-        <h2>Jak to funguje?</h2>
-        <p>
-            Poslední a ta nejefektivnější verze TNP-graphing funguje na způsob "Short-MA a Long-MA" kdy si vezme průměr z ceny za krátkou dobu a průměr ceny za delší dobu, udělá 2 nové grafy a když se grafy protnou tak buď prodá nebo nakoupí.
-        </p>
         <h2>Historie verzí</h2>
         <ul>
             <li>projekt-TNP (0.1 ... 1.2)</li>
@@ -55,5 +47,159 @@
       
         </table>
       </section>
+      <section>
+        <div class="code-boxes-box">
+          <div class="code-box" id="code-box-1">
+          <h3>TNP-graphing0.31.py</h3>
+          <pre>
+
+
+import yfinance as yf
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+from datetime import datetime, timedelta
+
+def get_stock_data(symbol, interval='1m', hours_back=24):   # upravte dle potřeby
+end_date = datetime.now()
+start_date = end_date - timedelta(hours=hours_back) - timedelta(hours=0) # upravte dle potřeby
+return yf.download(symbol, interval=interval, start=start_date, end=end_date)
+
+
+def simple_moving_average_strategy(data, short_window=10, long_window=50):
+signals = pd.DataFrame(index=data.index)
+signals['price'] = data['Close']
+signals['short_mavg'] = data['Close'].rolling(window=short_window, min_periods=1, center=False).mean()
+signals['long_mavg'] = data['Close'].rolling(window=long_window, min_periods=1, center=False).mean()
+signals['signal'] = 0.0
+signals['signal'][short_window:] = (signals['short_mavg'][short_window:] > signals['long_mavg'][short_window:]).astype(float)
+signals['positions'] = signals['signal'].diff()
+return signals
+
+def update(frame):
+new_data = get_stock_data(stock_symbol, interval='1m', hours_back=30)
+signals = simple_moving_average_strategy(new_data)
+
+plt.clf()
+
+plt.plot(new_data['Close'], label=f'{stock_symbol} Price')
+
+if not signals.empty:
+    plt.plot(signals['short_mavg'], label='Short MA', linestyle='-')
+    plt.plot(signals['long_mavg'], label='Long MA', linestyle='-')
+
+    buy_indices = signals.loc[signals.positions == 1.0].index
+    buy_values = signals.short_mavg[signals.positions == 1.0]
+    plt.scatter(buy_indices, buy_values, marker='^', color='g', label='Buy', alpha=1, s=100)
+
+    sell_indices = signals.loc[signals.positions == -1.0].index
+    sell_values = signals.short_mavg[signals.positions == -1.0]
+    plt.scatter(sell_indices, sell_values, marker='v', color='r', label='Sell', alpha=1, s=100)
+
+plt.title(f'{stock_symbol} - Real-Time Moving Average Strategy')
+plt.xlabel('Date')
+plt.ylabel('Price')
+plt.legend()
+
+stock_symbol = 'NVDA' # upravte na vaši zvolenou akcii
+
+fig, ax = plt.subplots(figsize=(12, 8))
+ani = FuncAnimation(fig, update, interval=3600000) # upravte dle potřeby (1000 = 1 sekunda)
+plt.show()
+          </pre>
+          </div>
+
+          <div class="code-box" id="code-box-2">
+            <h3>Projekt-TNP1.2.py</h3>
+            <pre>
+import ccxt
+import time
+
+def get_real_time_bitcoin_price():
+    exchange = ccxt.binance()
+    symbol = 'BTC/USDT'
+    ticker = exchange.fetch_ticker(symbol)
+    return ticker['last']
+
+def get_historical_data():
+    exchange = ccxt.binance()
+    symbol = 'BTC/USDT'
+    timeframe = '1h'
+    limit = 100 
+    ohlcv = exchange.fetch_ohlcv(symbol, timeframe, limit)
+    return ohlcv
+
+def is_shooting_star(candle):
+    # daytradingova taktika shooting star:
+    body_size = abs(candle[1] - candle[4])
+    upper_shadow = max(candle[2], candle[3]) - candle[1]
+
+    body_size_threshold = 0.1
+    upper_shadow_threshold = 2
+
+    return body_size <= body_size_threshold * candle[4] and upper_shadow >= upper_shadow_threshold * body_size
+
+def calculate_trade_amount(current_capital, price, transaction_cost, factor=-0.005):
+    max_trade_amount = current_capital * factor
+    trade_amount = max_trade_amount / price
+    transaction_fee = trade_amount * price * transaction_cost
+    return trade_amount - transaction_fee
+
+def trade_bitcoin(capital):
+    percentage_change = 0.01  # 1%
+    transaction_cost = 0.0005
+    current_capital = capital
+    bitcoin_amount = 0.0
+    cumulative_gain_loss = 0.0
+    current_gain_loss = 0.0
+    hold = False
+
+    historical_data = get_historical_data()
+
+    for candle in historical_data:
+        time.sleep(1)
+        close_price = get_real_time_bitcoin_price()
+
+        price_change = (close_price / historical_data[0][4] - 1) * 100
+
+        shooting_star = is_shooting_star(candle)
+
+        if hold:
+            current_gain_loss = (close_price - historical_data[0][4]) * bitcoin_amount
+            print(f"Current price:  {close_price} USD        Change: {price_change:.2f}%          Gain/Loss: {current_gain_loss:.2f} USD")
+
+        if not hold and (price_change <= -percentage_change or shooting_star):
+            hold = True
+            bitcoin_amount_to_buy = calculate_trade_amount(current_capital, close_price, transaction_cost)
+            bitcoin_amount += bitcoin_amount_to_buy
+            usd_equivalent = bitcoin_amount_to_buy * close_price
+            current_capital -= usd_equivalent
+            print(f"Buy:            {usd_equivalent:.2f} BTC/USD     Change: {price_change:.2f}%          Gain/Loss: {current_gain_loss:.2f} USD")
+            if shooting_star:
+                print("SHOOTING STAR")
+            
+
+        elif hold and (price_change >= percentage_change or shooting_star):
+            hold = False
+            bitcoin_amount_to_sell = calculate_trade_amount(current_capital, close_price, transaction_cost)
+            bitcoin_amount -= bitcoin_amount_to_sell
+            usd_equivalent = bitcoin_amount_to_sell * close_price
+            current_capital += usd_equivalent
+            cumulative_gain_loss += current_gain_loss
+            print(f"Sell:          {usd_equivalent:.2f} BTC/USD    Change: +{price_change:.2f}%         Gain/Loss: {current_gain_loss:.2f} USD")
+            if shooting_star:
+                print("SHOOTING STAR")
+
+
+    print("Final Results:")
+    total_change = ((current_capital + cumulative_gain_loss) / capital - 1) * 100
+    print(f"Your bank acc.: {total_change:.2f} USD")
+
+if __name__ == "__main__":
+    starting_capital = 100
+    trade_bitcoin(starting_capital)
+            </pre>
+          </div>
+        </div>
     </body>
     </html>

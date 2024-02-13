@@ -170,3 +170,7 @@ section.ostatni-codeboxy .code-box{
 #social-links a {
   color: #333;
 }
+
+.code-box .project-name {
+  color: white;
+}
