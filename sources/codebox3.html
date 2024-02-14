@@ -131,11 +131,95 @@ while True:
         print(f"prijmacy zkousky budou za {days_count} dni")
         time.sleep(3600)</code>
                 </pre>
-                <h3>Techdays-activity</h3>
+
+                <h3>JPZcountdown.html</h3>
+                <h4>Toto je program, který také odpočítává dny do jednotné příjimací zkoušky ale narozdíl od toho prvního udělá stránku s odpočtem. Program jsem udělal hlavně, abych si stránku mohl dát na pozadí a zůstat motivovaný.(Na stránky s odpočtem se můžete podívat zde).</h4>
+                <a href="https://6969696969696969696969.on.drv.tw/www.KdyBudouPrijmacyZkousky.com/">zde</a>
+                <pre>
+                    <code>
+
+
+
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;kdy jsou prijmacky?&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            font-weight: 1000;
+            color: #000;
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        #countdown {
+            font-size: 48px;
+            margin-top: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        #rocket {
+            position: absolute;
+            z-index: 1;
+            width: 0px;     /*1100*/
+            height: 0px;    /*1100*/
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id="countdown"&gt;&lt;/div&gt;
+    &lt;img id="rocket" src="rocket.png" alt="Rocket"&gt;
+
+    &lt;script&gt;
+        function updateCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            const targetDate = new Date('2024-04-12T00:00:00');
+            const currentDate = new Date();
+            const remainingTime = targetDate - currentDate;
+            const remainingDays = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+    
+            if (remainingDays &gt; 0) {
+               countdownElement.textContent = remainingDays + ' dnů do příjmacích zkoušek';
+            } 
+            else {
+                countdownElement.textContent = '0 dnů';
+            }
+    
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+    
+        updateCountdown();
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                    </code>
+                </pre>
+                <h3>Techdays-activity.py</h3>
                 <h4>Tento program sleduje stránku s přihláškami na program TechDays a kontroluje, jestli je text "Formulář TechDays! 2024 již nepřijímá odpovědi." na stránce. Jestliže ne, tak to znamenalo, že jsou přihlášky dostupné. Stejný program jsem použil i na kurz matematiky k JPZ na SSPŠ (můžete to opět najít na mém Githubu).</h4>
                 <a href="https://github.com/horakdave/Countdowns_or_trackers/blob/main/TechDays_activity.py">zde</a>
                 <pre>
                     <code>
+
+
+
+                        
 import time
 import requests
 
@@ -159,6 +243,10 @@ while True:
                     <h4>Toto je hra v Pythonu, ve které když prohrajete, tak se sama smaže. Hru jsem vytvořil jako vtip, ale je to jeden z nejdelších kódů, které jsem kdy napsal.</h4>
                     <a href="https://github.com/horakdave/Pygame/blob/main/FunGame.py">github na hru</a>
                     <pre><code>
+
+
+
+
 import pygame
 import time
 import random
