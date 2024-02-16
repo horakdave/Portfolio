@@ -200,6 +200,9 @@ while True:
             else {
                 countdownElement.textContent = '0 dnů';
             }
+
+            if (remainingDays < 0)  {
+                countdownElement.textContent = 'už byly'
     
             updateCountdown();
             setInterval(updateCountdown, 1000);
